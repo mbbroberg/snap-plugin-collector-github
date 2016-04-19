@@ -37,5 +37,5 @@ func main() {
 	meta := github.Meta()
 
 	// Start a collector
-	plugin.Start(meta, github.NewGithubCollector(), os.Args[1])
+	plugin.Start(meta, new(github.GithubCollector), os.Args[1])
 }
