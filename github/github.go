@@ -15,7 +15,7 @@ import (
 const (
 	// VENDOR namespace part
 	VENDOR = "intel"
-	// PLUGIN name namespace part
+	// NAME is the name of this plugin
 	NAME = "github"
 	// VERSION of GitHub plugin
 	VERSION = 1
@@ -31,7 +31,11 @@ type RepositoryContentGetOptions struct {
 	Ref string `url:"ref,omitempty"`
 }
 
-type GithubCollector struct{}
+// make sure that we actually satisify required interface
+var _ plugin.CollectorPlugin = (*GithubCollector)(nil)
+
+type GithubCollector struct {
+}
 
 // tokenSource is an encapsulation of the AccessToken string
 type tokenSource struct {
@@ -51,12 +55,14 @@ func (t *tokenSource) Token() (*oauth2.Token, error) {
 	return token, nil
 }
 
+// GetConfigPolicy must be implemented
 func (g *GithubCollector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
 	c := cpolicy.New()
 	return c, nil
 }
 
-func (g *GithubCollector) CollectMetrics([]plugin.PluginMetricType) ([]plugin.PluginMetricType, error) {
+// CollectMetrics authenticates to GitHub and collects repositories
+func (g *GithubCollector) CollectMetrics(mts []plugin.PluginMetricType) ([]plugin.PluginMetricType, error) {
 	org = "intelsdi-x"
 	personalAccessToken = os.Getenv("GITHUB_ACCESS_TOKEN")
 	if len(personalAccessToken) == 0 {
@@ -93,14 +99,14 @@ func (g *GithubCollector) CollectMetrics([]plugin.PluginMetricType) ([]plugin.Pl
 	}
 
 	log.LogInfo("")
-	// return something?
-	mts := []plugin.PluginMetricType{}
-	mts = append(mts, plugin.PluginMetricType{Namespace_: []string{"intel", "github", "foo"}})
-	mts = append(mts, plugin.PluginMetricType{Namespace_: []string{"intel", "github", "bar"}})
-	return mts, nil
+	metrics := []plugin.PluginMetricType{}
+	metrics = append(metrics, plugin.PluginMetricType{Namespace_: []string{"intel", "github", "foo"}})
+	metrics = append(metrics, plugin.PluginMetricType{Namespace_: []string{"intel", "github", "bar"}})
+	return metrics, nil
 }
 
-func (g *GithubCollector) GetMetricTypes(plugin.PluginMetricType) ([]plugin.PluginMetricType,
+// GetMetricTypes gathers available measurements from this plugin
+func (g *GithubCollector) GetMetricTypes(cfg plugin.PluginConfigType) ([]plugin.PluginMetricType,
 	error) {
 	mts := []plugin.PluginMetricType{}
 	mts = append(mts, plugin.PluginMetricType{Namespace_: []string{"intel", "github", "foo"}})
