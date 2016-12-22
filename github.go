@@ -12,13 +12,13 @@ const (
 )
 
 // make sure that we actually satisify required interface
-var _ plugin.CollectorPlugin = (*GithubCollector)(nil)
+var _ plugin.Collector = (*GithubCollector)(nil)
 
 type GithubCollector struct {
 }
 
 // CollectMetrics gets the metrics << make this better :)
-func (g *GithubCollector) CollectMetrics(mst []plugin.Metric) ([]plugin.Metric, error) {
+func (GithubCollector) CollectMetrics(mst []plugin.Metric) ([]plugin.Metric, error) {
 	metrics := []plugin.Metric{}
 	metrics = append(metrics, plugin.Metric{
 		Namespace: plugin.NewNamespace(NAMESPACE, "foo"),
