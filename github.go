@@ -1,8 +1,6 @@
-package github
+package main
 
-import (
-	"github.com/intelsdi-x/snap-plugin-lib-go/v1/plugin"
-)
+import "github.com/intelsdi-x/snap-plugin-lib-go/v1/plugin"
 
 const (
 	// NAMESPACE part. Change this when you package up your own.
@@ -22,6 +20,10 @@ type GithubCollector struct {
 // CollectMetrics gets the metrics << make this better :)
 func (g *GithubCollector) CollectMetrics(mst []plugin.Metric) ([]plugin.Metric, error) {
 	metrics := []plugin.Metric{}
+	metrics = append(metrics, plugin.Metric{
+		Namespace: plugin.NewNamespace(NAMESPACE, "foo"),
+		Version:   1,
+	})
 	return metrics, nil
 }
 
@@ -29,29 +31,14 @@ func (g *GithubCollector) CollectMetrics(mst []plugin.Metric) ([]plugin.Metric, 
 func (GithubCollector) GetMetricTypes(cfg plugin.Config) ([]plugin.Metric, error) {
 	metrics := []plugin.Metric{}
 	metrics = append(metrics, plugin.Metric{
-		Namespace: plugin.NewNamespace(NAMESPACE, "foo"), 
-	Version: 1, 
+		Namespace: plugin.NewNamespace(NAMESPACE, "foo"),
+		Version:   1,
 	})
 	return metrics, nil
 }
 
 // GetConfigPolicy must be implemented
-func (g *GithubCollector) GetConfigPolicy() (*cpolicy.ConfigPolicy, error) {
-	return cpolicy.New(), nil
-}
-
-/*
-	GetConfigPolicy() returns the configPolicy for your plugin.
-
-	A config policy is how users can provide configuration info to
-	plugin. Here you define what sorts of config info your plugin
-	needs and/or requires.
-*/
-func (RandCollector) GetConfigPolicy() (plugin.ConfigPolicy, error) {
+func (GithubCollector) GetConfigPolicy() (plugin.ConfigPolicy, error) {
 	policy := plugin.NewConfigPolicy()
 	return *policy, nil
 }
-
-
-
-
