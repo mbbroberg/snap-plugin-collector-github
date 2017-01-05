@@ -1,6 +1,20 @@
+# UNDER DEVELPOMENT - Snap collector plugin - GitHub
+A Go-based plugin for the [Snap telemetry framework](http://snap-telemetry.io) that collects some statistics from each repository for a specific user.
 
-## Snap Plugin Go Library: Collector Plugin Example
-Here you will find an example plugin that covers the basics for writing a collector plugin.
+## Features
+
+* collects "forks_count", "stargazers_count", "watchers_count", "open_issues_count", "rate_limit_hit"
+* takes `username` and `password` as part of its policy, but does not require it.  
+
+Notes: 
+
+https://developer.github.com/v3/#rate-limiting
+
+> For requests using Basic Authentication or OAuth, you can make up to 5,000 requests per hour. For unauthenticated requests, the rate limit allows you to make up to 60 requests per hour. Unauthenticated requests are associated with your IP address, and not the user making requests.
+
+
+# Default README below - burn after reading.
+
 
 ## Plugin Naming, Files, and Directory
 For your collector plugin, create a new repository and name your plugin project using the following format:

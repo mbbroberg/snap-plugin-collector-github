@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "schedule": {
+    "type": "simple",
+    "interval": "1s"
+  },
+  "workflow": {
+    "collect": {
+      "metrics": {
+        "/evilcorp/github/forks_count": {},
+        "/evilcorp/github/stargazers_count": {},
+        "/evilcorp/github/watchers_count": {},
+        "/evilcorp/github/open_issues_count": {},
+        "/evilcorp/github/rate_limit_hit": {}
+      },
+      "config": {
+        "/evilcorp/github": {
+          "user": "mjbrender",
+          "password": "potato"
+        }
+      },
+      "publish": null
+    }
+  }
+}
