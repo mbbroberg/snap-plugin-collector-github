@@ -1,4 +1,4 @@
-package main
+package github
 
 import "github.com/intelsdi-x/snap-plugin-lib-go/v1/plugin"
 

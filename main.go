@@ -21,6 +21,7 @@ package main
 
 import (
 	"github.com/intelsdi-x/snap-plugin-lib-go/v1/plugin"
+	gh "github.com/mjbrender/snap-plugin-collector-github/github"
 )
 
 const (
@@ -29,5 +30,5 @@ const (
 )
 
 func main() {
-	plugin.StartCollector(GithubCollector{}, pluginName, pluginVersion)
+	plugin.StartCollector(gh.GithubCollector{}, pluginName, pluginVersion)
 }
