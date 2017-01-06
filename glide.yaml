@@ -1,0 +1,14 @@
+package: github.com/mjbrender/snap-plugin-collector-github
+import:
+- package: github.com/intelsdi-x/snap-plugin-lib-go
+  subpackages:
+  - v1/plugin
+testImport:
+- package: github.com/intelsdi-x/snap
+  subpackages:
+  - control
+  - core
+  - plugin/helper
+- package: github.com/smartystreets/goconvey
+  subpackages:
+  - convey

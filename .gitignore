@@ -1,6 +1,9 @@
 # don't commit the binary
 snap-plugin-collector-github
 
+# Don't commit the vendor folder 
+vendor/
+
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
