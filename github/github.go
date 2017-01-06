@@ -16,30 +16,37 @@ const (
 // make sure that we actually satisify required interface
 var _ plugin.Collector = (*GithubCollector)(nil)
 
+// GithubCollector is the plugin struct for collecting GitHub metrics
 type GithubCollector struct {
 }
 
-var nsTypes = struct {
-	githubMetricTypes []string
-}{
-	// names of available metrics
-	githubMetricTypes: []string{"forks_count", "stargazers_count", "watchers_count", "open_issues_count", "rate_limit_hit"},
+// NewGithubCollector is used to abstract how we dereference GithubCollector
+func NewGithubCollector() *GithubCollector {
+	return &GithubCollector{}
 }
 
+// names of available metrics
+var githubMetricTypes = []string{"forks_count", "stargazers_count", "watchers_count", "open_issues_count", "rate_limit_hit"}
+
 // CollectMetrics gets the metrics << make this better :)
-func (GithubCollector) CollectMetrics(mst []plugin.Metric) ([]plugin.Metric, error) {
+func (GithubCollector) CollectMetrics(mts []plugin.Metric) ([]plugin.Metric, error) {
 	metrics := []plugin.Metric{}
 	metrics = append(metrics, plugin.Metric{
 		Namespace: plugin.NewNamespace(Vendor, "foo"),
 		Version:   1,
 	})
+
+	// picking the first metric's config because it will be identical for all
+	mts[0].Config.GetString("user")
+	mts[0].Config.GetString("password")
+
 	return metrics, nil
 }
 
 // GetMetricTypes gathers available measurements from this plugin
 func (GithubCollector) GetMetricTypes(cfg plugin.Config) ([]plugin.Metric, error) {
 	metrics := []plugin.Metric{}
-	for _, metric := range nsTypes.githubMetricTypes {
+	for _, metric := range githubMetricTypes {
 		metric := plugin.Metric{Namespace: plugin.NewNamespace(Vendor, Name).AddStaticElement(metric)}
 		metrics = append(metrics, metric)
 	}
